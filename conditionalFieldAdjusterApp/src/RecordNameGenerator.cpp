@@ -26,7 +26,7 @@ std::string RecordNameGenerator::generateRecordName() {
   recordName.reserve(prefix.length() + 30);
   recordName += prefix;
   for (int i = 0; i < 30; ++i) {
-    char randomOffset = intDistribution(randomEngine);
+    int randomOffset = intDistribution(randomEngine);
     if (randomOffset < 10) {
       recordName.push_back('0' + randomOffset);
     } else if (randomOffset < 36) {

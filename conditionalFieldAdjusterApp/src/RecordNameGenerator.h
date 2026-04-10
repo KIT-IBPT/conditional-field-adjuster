@@ -39,7 +39,7 @@ private:
   /**
    * Uniform distribution that is used to generate random characters.
    */
-  std::uniform_int_distribution<char> intDistribution;
+  std::uniform_int_distribution<int> intDistribution;
 
   /**
    * Prefix that is prepended to all generated names.
