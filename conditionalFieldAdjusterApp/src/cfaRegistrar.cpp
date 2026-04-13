@@ -1,3 +1,8 @@
+/*************************************************************************
+ * Copyright (c) 2026 Karlsruhe Institute of Technology.
+ * This file is distributed subject to a Software License Agreement found
+ * in the file LICENSE.txt that is included with this distribution.
+ *************************************************************************/
 
 #include <cstring>
 #include <stdexcept>
