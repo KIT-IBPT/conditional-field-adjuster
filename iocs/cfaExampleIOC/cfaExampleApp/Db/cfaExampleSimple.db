@@ -1,0 +1,9 @@
+record(bi, "record_name") {
+    field(DESC, "description")
+    field(VAL,  "value")
+    field(ZNAM, "zero_name")
+    field(ZSV, "NO_ALARM MINOR MAJOR")
+    field(ONAM, "one_name")
+    field(OSV, "NO_ALARM MINOR MAJOR")
+    field(INP,  "input link")
+}
