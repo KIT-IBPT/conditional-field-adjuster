@@ -1,9 +1,38 @@
-record(bi, "record_name") {
-    field(DESC, "description")
-    field(VAL,  "value")
-    field(ZNAM, "zero_name")
-    field(ZSV, "NO_ALARM MINOR MAJOR")
-    field(ONAM, "one_name")
-    field(OSV, "NO_ALARM MINOR MAJOR")
-    field(INP,  "input link")
+record(bo, "$(P)$(R)Mode") {
+    field(DESC, "Mode simulator")
+    field(VAL,  "0")
+    field(PINI, "YES")
+    field(ZNAM, "Mode 0")
+    field(ONAM, "Mode 1")
+}
+
+record(ai, "$(P)$(R)Value") {
+    field(DESC, "Value simulator")
+    field(VAL,  "3.14159")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(LOW, "3.0")
+    field(LSV, "MAJOR")
+    field(HIGH, "3.2")
+    field(HSV, "MAJOR")
+
+    # CFA fields
+    info("cfa:select", "$(P)$(R)Mode CP")
+    info("cfa:1:LOW",  "3.15")
+    info("cfa:1:PREC",  "5")
+}
+
+record(bi, "$(P)$(R)Status") {
+    field(DESC, "Status simulator")
+    field(VAL,  "1")
+    field(PINI, "YES")
+    field(ZNAM, "Inactive")
+    field(ZSV, "MAJOR")
+    field(ONAM, "Active")
+    field(OSV, "NO_ALARM")
+
+    # CFA fields
+    info("cfa:select", "$(P)$(R)Mode CP")
+    info("cfa:1:ZSV",  "NO_ALARM")
+    info("cfa:1:OSV",  "MAJOR")
 }

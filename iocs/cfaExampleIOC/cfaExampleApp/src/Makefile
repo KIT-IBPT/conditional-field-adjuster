@@ -20,10 +20,8 @@ cfaExample_DBD += base.dbd
 cfaExample_SRCS += cfaExample_registerRecordDeviceDriver.cpp
 cfaExample_SRCS += cfaExampleMain.cpp
 
-ifdef CONDITIONAL_FIELD_ADJUSTER_0_0_0
-cfaExample_DBD += linStat.dbd
-cfaExample_LIBS += linStat
-endif
+cfaExample_DBD += conditionalFieldAdjuster.dbd
+cfaExample_LIBS += conditionalFieldAdjuster
 
 cfaExample_LIBS += $(EPICS_BASE_IOC_LIBS)
 
