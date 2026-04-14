@@ -1,3 +1,9 @@
+/*************************************************************************
+ * Copyright (c) 2026 Karlsruhe Institute of Technology.
+ * This file is distributed subject to a Software License Agreement found
+ * in the file LICENSE.txt that is included with this distribution.
+ *************************************************************************/
+
 #ifndef EPICS_CFA_RECORD_NAME_GENERATOR_H
 #define EPICS_CFA_RECORD_NAME_GENERATOR_H
 
