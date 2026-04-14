@@ -1,0 +1,7 @@
+ifndef CONDITIONAL_FIELD_ADJUSTER_TOP
+# define regardles of variable name used in configure/RELEASE
+# eg. use with DB_INSTALLS
+CONDITIONAL_FIELD_ADJUSTER_TOP := $(dir $(lastword $(MAKEFILE_LIST)))../
+endif
+
+CONDITIONAL_FIELD_ADJUSTER_0_0_0 = YES
