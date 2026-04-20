@@ -7,6 +7,8 @@ record(mbbo, "$(P)$(R)Mode") {
     field(ONVL, "1")
     field(TWST, "Mode 2")
     field(TWVL, "2")
+    field(THST, "Mode 3")
+    field(THVL, "3")
     field(VAL,  "0")
     field(PINI, "YES")
 }
@@ -20,19 +22,25 @@ record(ai, "$(P)$(R)Value") {
     field(LSV, "MAJOR")
     field(HIGH, "3.2")
     field(HSV, "MAJOR")
-    field(SCAN, "1 Second")
+    field(SCAN, "1 second")
     field(EGU, "mA")
+    field(LOPR, "2.5")
+    field(HOPR, "4.0")
 
     # CFA fields
     info("cfa:select", "$(P)$(R)Mode CP")
     
-    info("cfa:1:LOW",  "3.15")
-    info("cfa:1:LSV",  "NO_ALARM")
-    info("cfa:1:PREC",  "1")
-    info("cfa:1:EGU",  "MW")
-    info("cfa:1:SCAN",  "Passive")
+    info("cfa:2:LOW",  "3.15")
+    info("cfa:2:LSV",  "MINOR")
+    info("cfa:2:PREC",  "5")
+    info("cfa:2:EGU",  "MW")
+    info("cfa:2:SCAN",  "Passive")
 
-    info("cfa:2:HIGH", "3.18")
+    info("cfa:3:HIGH", "3.18")
+    info("cfa:3:LOW",  "3.15")
+    info("cfa:3:LSV",  "MAJOR")
+    info("cfa:3:LOPR",  "-60")
+    info("cfa:3:HOPR",  "300")
 }
 
 record(bi, "$(P)$(R)Status") {
