@@ -1,9 +1,14 @@
-record(bo, "$(P)$(R)Mode") {
+record(mbbo, "$(P)$(R)Mode") {
     field(DESC, "Mode simulator")
     field(VAL,  "0")
+    field(ZRST, "Mode 0")
+    field(ZRVL, "0")
+    field(ONST, "Mode 1")
+    field(ONVL, "1")
+    field(TWST, "Mode 2")
+    field(TWVL, "2")
+    field(VAL,  "0")
     field(PINI, "YES")
-    field(ZNAM, "Mode 0")
-    field(ONAM, "Mode 1")
 }
 
 record(ai, "$(P)$(R)Value") {
@@ -15,11 +20,19 @@ record(ai, "$(P)$(R)Value") {
     field(LSV, "MAJOR")
     field(HIGH, "3.2")
     field(HSV, "MAJOR")
+    field(SCAN, "1 Second")
+    field(EGU, "mA")
 
     # CFA fields
     info("cfa:select", "$(P)$(R)Mode CP")
+    
     info("cfa:1:LOW",  "3.15")
-    info("cfa:1:PREC",  "5")
+    info("cfa:1:LSV",  "NO_ALARM")
+    info("cfa:1:PREC",  "1")
+    info("cfa:1:EGU",  "MW")
+    info("cfa:1:SCAN",  "Passive")
+
+    info("cfa:2:HIGH", "3.18")
 }
 
 record(bi, "$(P)$(R)Status") {

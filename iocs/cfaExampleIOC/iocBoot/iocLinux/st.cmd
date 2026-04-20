@@ -8,7 +8,7 @@ dbLoadDatabase "dbd/cfaExample.dbd"
 cfaExample_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
-dbLoadRecords("db/cfaExampleSimple.db","P=CFA:,R=Simple:")
+dbLoadRecords("db/cfaExampleSimple.db","P=Example:,R=")
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
