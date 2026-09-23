@@ -65,4 +65,4 @@ private:
 } // namespace cfa
 } // namespace epics
 
-#endif // EPICS_CFA_GENERATOR_H
+#endif // EPICS_CFA_RECORD_NAME_GENERATOR_H
