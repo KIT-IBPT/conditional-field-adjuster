@@ -54,6 +54,7 @@ tight and a major alarm is raised when the value goes too far out of range. In
 commissioning mode, only a minor alarm is raised. In test mode, the range in
 which the value is deemed okay is increased.
 
+
 Installation
 ------------
 
@@ -113,6 +114,33 @@ their default values.
 Fields that are not specified for at least one of the cases are never touched.
 
 
+### Names of generated records
+
+By default, the automatically generated records have names that start with the
+prefix `cfa:` followed by 30 random, alphanumeric characters. This schema can
+be changed with the `cfaSetRecordNameTemplate` IOC shell function, which must
+be called before calling `iocInit`. This function takes a single argument,
+which is a string specifying the template for generated record names.
+
+In this template, the following expressions can be used:
+
+- `{random(N)}` where `N` is a positive number indicating the number of random
+  random characters that shall be inserted when the template is expanded.
+- `{base}` which is replaced by the base record name.
+- `{local_seq}` which is replaced by an integer number that is incremented when
+  multiple names are generated for the same base record name.
+
+Everything outside curly braces is treated as a literal string. If the literal
+string contains curly braces, they must be escaped by doubling (`{` has to be
+replaced with `{{` and `}` has to be replaced by `}}`).
+
+For example, the default template that is used when `cfaSetRecordNameTemplate`
+is not called is equivalent to the template string `cfa:{random(30)}`. A
+template string of `{base}:cfa{local_seq}` would result in records that are
+generated for the record `my_record` getting names like `my_record:cfa1`,
+`my_record:cfa2`, etc.
+
+
 Implementation details
 ----------------------
 
@@ -121,9 +149,7 @@ the IOC is running, it is completely passive.
 
 In the `initHookAfterInitDevSup` phase (this is the same phase were pass 0
 restores by the autosave module happen), it scans all records for the
-appropriate `info` entries and creates the associated record instances. All
-records that are created by this module have a name with the prefix `cfa:`
-followed by 30 random, alpha-numeric characters.
+appropriate `info` entries and creates the associated record instances.
 
 The records created for each target record have the following structure (each
 arrow indicates a forward link from one record to another one):

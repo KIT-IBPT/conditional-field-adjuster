@@ -5,6 +5,7 @@
  *************************************************************************/
 
 #include <cstring>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <map>
@@ -15,6 +16,7 @@
 #include <epicsVersion.h>
 #include <errlog.h>
 #include <initHooks.h>
+#include <iocsh.h>
 
 #include "RecordGenerator.h"
 
@@ -27,6 +29,15 @@
 using namespace epics::cfa;
 
 namespace {
+
+/**
+ * Record name template that is used when processing the info fields.
+ *
+ * This can be set from the IOC shell by calling the
+ * cfaSetRecordNameTemplate function. If it is not set, a default template is
+ * used.
+ */
+std::optional<RecordNameTemplate> globalRecordNameTemplate;
 
 /**
  * Print an error message.
@@ -63,7 +74,9 @@ void processCfaInfoFields() {
   ::DBENTRY entry;
   void *lastRecord = nullptr;
   std::string lastRecordName;
-  RecordGenerator recordGenerator;
+  RecordGenerator recordGenerator(
+    globalRecordNameTemplate.value_or(RecordNameTemplate(("cfa:{random(30)}")))
+  );
   ::dbInitEntry(pdbbase, &entry);
 
   // dbNextMatchingInfo iterates over record types, then records, then info
@@ -143,11 +156,52 @@ static void cfaInitHook(::initHookState state) noexcept {
   }
 }
 
+static const iocshArg iocshCfaSetRecordNameTemplateArg0 {
+  "template string", iocshArgString
+};
+static const iocshArg * const iocshCfaSetRecordNameTemplateArgs[] = {
+  &iocshCfaSetRecordNameTemplateArg0
+};
+static const iocshFuncDef iocshCfaSetRecordNameTemplateFuncDef = {
+  "cfaSetRecordNameTemplate", 1, iocshCfaSetRecordNameTemplateArgs
+};
+
+static void iocshCfaSetRecordNameTemplateFunc(
+  const iocshArgBuf *args
+) noexcept {
+  char *templateString = args[0].sval;
+  // Verify and convert the parameters.
+  if (!templateString || !std::strlen(templateString)) {
+    ::errlogPrintf(
+      ANSI_RED(
+        "Error: Template string must be specified.\n"
+      )
+    );
+    ::iocshSetError(1);
+    return;
+  }
+  try {
+    globalRecordNameTemplate = RecordNameTemplate(templateString);
+  } catch (std::exception &e) {
+    ::errlogPrintf(ANSI_RED("%s"), e.what());
+    ::iocshSetError(1);
+    return;
+  } catch (...) {
+    ::errlogPrintf(ANSI_RED("Error: Record name template could not be set."));
+    ::iocshSetError(1);
+    return;
+  }
+}
+
 /**
  * Registrar that registers the hooks needed by the conditional field adjuster.
  */
 static void conditionalFieldAdjusterRegistrar() noexcept {
   ::initHookRegister(cfaInitHook);
+  ::iocshRegister(
+    &iocshCfaSetRecordNameTemplateFuncDef,
+    iocshCfaSetRecordNameTemplateFunc
+  );
 }
 
 epicsExportRegistrar(conditionalFieldAdjusterRegistrar);

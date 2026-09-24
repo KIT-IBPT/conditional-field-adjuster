@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "RecordNameTemplate.h"
+
 namespace epics {
 namespace cfa {
 
@@ -33,14 +35,9 @@ public:
   static std::string const infoNamePrefix;
 
   /**
-   * Prefix used for the names of all generated auxilliary records.
-   */
-  static std::string const recordNamePrefix;
-
-  /**
    * Create a new record generator.
    */
-  RecordGenerator();
+  RecordGenerator(RecordNameTemplate const &nameTemplate);
 
   /**
    * Process the info fields associated with a record.
@@ -59,6 +56,11 @@ public:
   );
 
 private:
+
+  /**
+   * Template that is used for generating record names.
+   */
+  RecordNameTemplate nameTemplate;
 
   /**
    * Random seed that is used to seed the instances of RecordNameGenerator that

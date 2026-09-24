@@ -383,11 +383,11 @@ std::pair<dbfType, std::string> getRecordFieldTypeAndValue(
 } // anonymous namespace
 
 std::string const RecordGenerator::infoNamePrefix = "cfa:";
-std::string const RecordGenerator::recordNamePrefix = "cfa:";
 
 RecordGenerator::RecordGenerator(
+  RecordNameTemplate const &nameTemplate
 ) :
-  randomSeed(2)
+  nameTemplate(nameTemplate), randomSeed(2)
 {
   std::random_device randomDevice;
   randomSeed.push_back(randomDevice());
@@ -400,7 +400,7 @@ void RecordGenerator::processInfoFields(
 ) {
   std::map<int, std::map<std::string, std::string>> fieldValues;
   RecordNameGenerator recordNameGenerator(
-    recordNamePrefix, recordName, randomSeed
+    nameTemplate, recordName, randomSeed
   );
   std::string scanString = "Passive";
   std::string selectString;

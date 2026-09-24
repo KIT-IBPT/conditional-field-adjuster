@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "RecordNameTemplate.h"
+
 namespace epics {
 namespace cfa {
 
@@ -25,12 +27,12 @@ public:
   /**
    * Create a record name generator.
    *
-   * All generated record names start with the specified prefix. The
-   * baseRecordName combined with the seeds is used to seed the internal pseudo
-   * random number generator (PRNG).
+   * The generator uses the specified template in order to generate record
+   * names. The baseRecordName combined with the seeds is used to seed the
+   * internal pseudo random number generator (PRNG).
    */
   RecordNameGenerator(
-    std::string const &prefix,
+    RecordNameTemplate const &nameTemplate,
     std::string const &baseRecordName,
     std::vector<std::uint_least32_t> const &seeds
   );
@@ -43,14 +45,24 @@ public:
 private:
 
   /**
+   * Name of the base record for which the name is generated.
+   */
+  std::string baseRecordName;
+
+  /**
    * Uniform distribution that is used to generate random characters.
    */
   std::uniform_int_distribution<int> intDistribution;
 
   /**
-   * Prefix that is prepended to all generated names.
+   * Sequence number that can be used when generating record names.
    */
-  std::string prefix;
+  int localSequenceNumber;
+
+  /**
+   * Template that is used for generating record names.
+   */
+  RecordNameTemplate nameTemplate;
 
   /**
    * Random engine that is used to generate (pseudo) random numbers.
